@@ -299,21 +299,66 @@ let books = [
 
 // booksByCategory('Horror')
 
-// const booksByCategory = [];
-// const min = Math.min(...booksByCategory);
-// console.log(min);
+// Čia talpinamas jūsų ankstesnis kodas
 
-const booksByCategory  = (categoryName)=>{
-    let results = books.filter((category)=> category.name == categoryName)[0].books;
-    for(let book of results){
-        let li = document.createElement('li');
-        li.textContent = book.price;
-        document.querySelector('ul').appendChild(li)
+// Sukurkime funkciją, kuri pridės knygų pavadinimus į <ul> elementą
+// function getBooksByCategory(category) {
+//     const foundCategory = books.find(cat => cat.name.toLowerCase() === category.toLowerCase());
+//     return foundCategory ? foundCategory.books : [];
+// }
+
+// function displayBooksInList() {
+//     const booksList = document.getElementById("bookList");
+//     booksList.innerHTML = ""; // Išvalome <ul> elementą
+
+//     books.forEach(category => {
+//         const categoryTitle = document.createElement("h2");
+//         categoryTitle.textContent = category.name;
+//         booksList.appendChild(categoryTitle);
+
+//         const categoryBooks = getBooksByCategory(category.name);
+//         const categoryList = document.createElement("ul");
+
+//         categoryBooks.forEach(book => {
+//             const listItem = document.createElement("li");
+//             listItem.textContent = book.title;
+//             categoryList.appendChild(listItem);
+//         });
+
+//         booksList.appendChild(categoryList);
+//     });
+// }
+
+// // Pavyzdinis naudojimas:
+// displayBooksInList();
+
+
+//pigiausia knyga
+function findCheapestBook() {
+    let cheapestBook = null;
+    
+    books.forEach(category => {
+        category.books.forEach(book => {
+            if (!cheapestBook || book.price < cheapestBook.price) {
+                cheapestBook = book;
+            }
+        });
+    });
+    
+    return cheapestBook;
+}
+
+function displayCheapestBook() {
+    const cheapestBookList = document.getElementById("bookList");
+    cheapestBookList.innerHTML = ""; // Išvalome <ul> elementą
+
+    const cheapestBook = findCheapestBook();
+    if (cheapestBook) {
+        const listItem = document.createElement("li");
+        listItem.textContent = `Title: ${cheapestBook.title}, Price: ${cheapestBook.price} EUR`;
+        cheapestBookList.appendChild(listItem);
     }
 }
 
-booksByCategory('Horror')
-
-const priceByCategory = [100, 10, 12];
-const min = Math.min(...priceByCategory);
-console.log(min);
+// Pavyzdinis naudojimas:
+displayCheapestBook();
